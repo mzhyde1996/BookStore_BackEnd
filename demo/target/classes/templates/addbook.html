@@ -16,6 +16,13 @@
         
         <label for="isbn">ISBN:</label>
         <input type="text" id="isbn" name="isbn" th:field="*{isbn}" required/><br/>
+
+        <!-- Include a dropdown for selecting the category -->
+        <label for="category">Category:</label>
+        <select th:field="*{category.id}" class="form-control">
+            <option value="" disabled selected>Select a category</option>
+            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select><br/>
         
         <button class="btn btn-success" type="submit">Add Book</button>
     </form>

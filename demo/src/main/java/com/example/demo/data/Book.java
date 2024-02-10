@@ -1,8 +1,7 @@
 package com.example.demo.data;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
+
 @Entity
 public class Book {
     @Id
@@ -13,17 +12,20 @@ public class Book {
     private String author;
     private String isbn;
 
-    // Constructors
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Book() {
     }
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, String author, String isbn, Category category) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.category = category;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -56,7 +58,14 @@ public class Book {
         this.isbn = isbn;
     }
 
-    // toString method (optional but helpful for debugging)
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -64,6 +73,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", isbn='" + isbn + '\'' +
+                ", category=" + category +
                 '}';
     }
 }
