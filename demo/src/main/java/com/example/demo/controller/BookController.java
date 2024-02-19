@@ -4,8 +4,9 @@ import com.example.demo.data.Book;
 import com.example.demo.data.BookRepository;
 import com.example.demo.data.Category;
 import com.example.demo.data.CategoryRepository;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,26 @@ public class BookController {
         model.addAttribute("books", books);
         return "booklist";
     }
+//code for ID
+    @GetMapping("/api/books")
+    @ResponseBody
+    public List<Book> getAllBooksJson() {
+        return bookRepository.findAll();
+    }
+
+    // New method to get one book by ID
+    @GetMapping("/api/books/{id}")
+@ResponseBody
+public ResponseEntity<Book> getBookById(@PathVariable("id") Long id) {
+    Book book = bookRepository.findById(id)
+            .orElse(null);
+
+    if (book != null) {
+        return ResponseEntity.ok(book);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 
     @GetMapping("/addbook")
     public String showAddBookForm(Model model) {

@@ -1,7 +1,10 @@
 package com.example.demo.data;
 
-import jakarta.persistence.*;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import java.util.List;
 @Entity
 public class Book {
     @Id
@@ -15,6 +18,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
 
     public Book() {
     }
